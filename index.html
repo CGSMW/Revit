@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" id="parentHTML" data-bs-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Chemistry Reviewer</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script src="index.js" defer></script>
+</head>
+
+<body class="bg-primary-subtle" onload="getTheme()">
+  <header class="d-flex flex-wrap justify-content-center p-2 border-bottom border-primary-subtle border-5 bg-primary"
+    id="header">
+    <div class="d-flex align-items-center mb-md-0 me-md-auto ps-2">
+      <h1 class="fs-2">Welcome to Revit</h1>
+    </div>
+    <ul class="nav nav-pills pt-1">
+      <li class="nav-item"><a href="index.html" class="h-100 btn btn-primary" role="button"><i
+            class="bi bi-house"></i> Home
+        </a></li>
+      <li class="nav-item"><a href="TimetableMaker/maker.html" class="h-100 btn btn-primary">
+          <i class="bi bi-calendar-range"></i> Timetable Maker</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="h-100 btn btn-primary dropdown-toggle m-0" type="button" data-bs-toggle="dropdown"
+          aria-expanded="false"><i class="bi bi-list"></i> Topics</a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="Ions/chargesList.html" class="">Ion charges</a></li>
+          <li><a class="dropdown-item" href="Ions/properties.html" class="">Ionic Properties</a></li>
+          <li><a class="dropdown-item" href="Ions/Analysis/tests.html">Ion Tests</a></li>
+        </ul>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="h-100 btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+          aria-expanded="false"><i class="bi bi-person-circle"></i> Profile</a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="account.html"><i class="bi bi-gear"></i> Settings</a></li>
+          <li><a class="dropdown-item" href="UserData/login.html"><i class="bi bi-person-check"></i> Login</a></li>
+          <li><a class="dropdown-item" href="UserData/signUp.html"><i class="bi bi-plus-circle"></i> Sign Up</a></li>
+          <li><a class="dropdown-item" href="/logOut"><i class="bi bi-power"></i> Log out</a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="h-100 btn btn-primary dropdown-toggle me-2" type="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          <i class="bi bi-sun"></i>
+        </a>
+        <ul class="dropdown-menu">
+          <li><button class="dropdown-item" type="radio" aria-pressed="true" onclick="setThemeLight()"
+              checked>Light</button></li>
+          <li><button class="dropdown-item" type="radio" aria-pressed="false" onclick="setThemeDark()">Dark</button>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </header>
+  <div id="body" class="container row text-center p-3">
+  <div id="chooseTopics" class="p-2 col">
+    <h1 class="pb-2 text-body-color border-bottom border-info border-5 fs-3">Choose a topic</h1>
+    <div class="w-100 bg-info border border-info-subtle border-3 rounded-4 btn-group-vertical">
+      <a href="Ions/chargesList.html" class="w-100"><button
+          class="w-100 btn btn-info rounded-top-4 rounded-bottom-0 border-bottom">Ion
+          charges</button></a>
+      <a href="Ions/properties.html" class="w-100"><button
+          class="w-100 btn btn-info rounded-0 border-bottom">Ionic Properties</button></a>
+      <a href="Ions/Analysis/tests.html" class="w-100"><button
+          class="w-100 btn btn-info rounded-bottom-4 rounded-top-0">Ion Tests</button></a>
+    </div>
+  </div>
+  <div id = "goToTimetableMaker" class="p-2 col">
+    <h1 class="pb-2 text-body-color border-bottom border-info border-5 fs-3">Revision timetable maker</h1>
+    <div class="bg-info border border-info-subtle border-3 rounded-4">
+      <a href="TimetableMaker/maker.html" class="w-100"><button class="w-100 btn btn-info rounded-4">Make a revision timetable</button></a>
+    </div>
+  </div>
+  </div>
+
+  <!--    CODE FOR SIGN UP AND LOGIN ON HOME PAGE
+   <div class="row p-2 m-1" id="loginMenu">
+    <h1 class="pb-2 text-body-color border-bottom border-primary border-5 fs-3">Login or sign up</h1>
+      <div class="col rounded-end rounded-4 border border-primary-subtle border-4 bg-primary"  id="loginCol">
+        <h4>Login</h4>
+        <div id="loginForm" class="p-2">
+          <form>
+            <label for="loginUsername">Username:</label>
+            <input type="text" id="loginUsername" name="loginUsername" placeholder="Enter username" required>
+            <div class="pb-2 w-100"></div>
+            <label for="loginPassword">Password:</label>
+            <input type="password" id="loginPassword" name="loginPassword" placeholder="Enter password" required>
+            <button type="submit">Login</button>
+          </form>
+          <p id="loginResponse"></p>
+        </div>
+      </div>
+      <div class="col rounded-start rounded-4 border border-primary-subtle border-4 bg-primary" id="signUpCol">
+        <h4>Sign Up</h4>
+        <div id="signUpForm" class="p-2">
+          <form>
+            <label for="signUpUsername">Username:</label>
+            <input type="text" id="signUpUsername" name="signUpUsername" placeholder="Enter a username" required>
+            <div class="pb-2 w-100"></div>
+            <label for="signUpPassword">Password:</label>
+            <input type="password" id="signUpPassword" name="signUpPassword" placeholder="Enter a password" required>
+            <button type="submit">Sign Up</button>
+          </form>
+          <p id="signUpResponse"></p>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</body>
+
+</html>
