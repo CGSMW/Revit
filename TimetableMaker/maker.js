@@ -486,7 +486,7 @@ function displayTimetable (timetable) {
     if (difference == 30 || difference == 70) {
       const sessionId = `${session.day}-${startTime}-${endTime}`
       const deleteSessionButton =
-        '<br><button class="btn text-end p-0" type="button" id="delete-' +
+        '<button class="btn text-end p-0" type="button" id="delete-' +
         sessionId +
         '" onclick="deleteSessionFromButton()"><i class="bs bi bi-x-circle"></i></button>'
       const editSessionButton =
@@ -494,11 +494,30 @@ function displayTimetable (timetable) {
         sessionId +
         '" onclick="editSessionFromButton()"><i class="bs bi bi-pencil-square"></i></button>'
       document.getElementById(sessionId).innerHTML =
-        session.subject + deleteSessionButton + editSessionButton
+        session.subject + '<br>' + deleteSessionButton + editSessionButton
       document.getElementById(sessionId).style.backgroundColor = getLetterColor(
         session.type
       )
       document.getElementById(sessionId).classList = 'rounded-3'
+      // If revision session, add to revision session list
+      if (session.type == 'Revision') {
+        const revisionSession = document.createElement('li')
+        const sessionInfo =
+          session.subject +
+          ` (${session.day}-${session.startTime}-${session.endTime})`
+        const markAsDoneButton =
+          '<button class="btn text-end p-0" type="button" id="markAsDone-' +
+          sessionId +
+          '" onclick="markSessionAsDone()"><i class="bs bi bi-check2-square"></i></button>'
+        revisionSession.innerHTML =
+          sessionInfo +
+          deleteSessionButton +
+          editSessionButton +
+          markAsDoneButton
+        document
+          .getElementById('revisionSessionsDisplay')
+          .appendChild(revisionSession)
+      }
     } else {
       let miniEndTime = getMiniEndTime(startTime)
       let miniStartTime
@@ -538,6 +557,25 @@ function displayTimetable (timetable) {
             '" onclick="editSessionFromButton()"><i class="bs bi bi-pencil-square"></i></button>'
           document.getElementById(sessionId).innerHTML =
             deleteSessionButton + editSessionButton
+        }
+        // If revision session, add to revision session list
+        if (session.type == 'Revision') {
+          const revisionSession = document.createElement('li')
+          const sessionInfo =
+            session.subject +
+            ` (${session.day}-${session.startTime}-${session.endTime})`
+          const markAsDoneButton =
+            '<button class="btn text-end p-0" type="button" id="markAsDone-' +
+            sessionId +
+            '" onclick="markSessionAsDone()"><i class="bs bi bi-check2-square"></i></button>'
+          revisionSession.innerHTML =
+            sessionInfo +
+            deleteSessionButton +
+            editSessionButton +
+            markAsDoneButton
+          document
+            .getElementById('revisionSessionsDisplay')
+            .appendChild(revisionSession)
         }
         miniEndTime = Number(miniEndTime) + 30
         if (miniEndTime.toString().length == 3) {
@@ -652,7 +690,9 @@ async function editSessionFromButton () {
       .getElementById('deleteSessionForm')
       .dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }))
   } else {
-    console.log(`An error occurred while loading the session: ${session.message}.`)
+    console.log(
+      `An error occurred while loading the session: ${session.message}.`
+    )
   }
 }
 

@@ -12,7 +12,7 @@ var mongo = require('mongodb')
 const { MongoClient } = require('mongodb')
 const { start } = require('repl')
 const uri =
-  'mongodb+srv://admin:admin@revit-db.uqmmk.mongodb.net/sample_mflix?retryWrites=true&w=majority&appName=Revit-DB'
+  'mongodb+srv://admin:admin@revit-db.uqmmk.mongodb.net/?retryWrites=true&w=majority&appName=Revit-DB'
 const client = new MongoClient(uri)
 try {
   client.connect()
