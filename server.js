@@ -41,10 +41,7 @@ async function findDocument (client, username, collection) {
 }
 
 async function findDocumentByParams (client, params, collection) {
-  const result = await client
-    .db('Users')
-    .collection(collection)
-    .findOne(params)
+  const result = await client.db('Users').collection(collection).findOne(params)
   if (result) {
     return result
   } else {
@@ -53,10 +50,7 @@ async function findDocumentByParams (client, params, collection) {
 }
 
 async function findManyDocuments (client, params, collection) {
-  const result = await client
-    .db('Users')
-    .collection(collection)
-    .find(params)
+  const result = await client.db('Users').collection(collection).find(params)
   if (result) {
     return result.toArray()
   } else {
@@ -331,8 +325,7 @@ app.post('/getTimetableSession', async (req, res) => {
       console.error('No session found.')
       return res.json({ success: false, message: 'No such session found.' })
     }
-  }
-  else {
+  } else {
     console.error('Not logged in.')
     return res.json({ success: false, message: 'Not logged in.' })
   }
@@ -362,7 +355,26 @@ app.post('/addTimetableSession', async (req, res) => {
       },
       'Timetables'
     )
-    return res.json({ success: true, message: 'Added timetable session.' })
+    // Check document has been created
+    const created = await findDocumentByParams(client, {
+      username: req.session.username,
+      subject: subject,
+      day: day,
+      startTime: startTime,
+      endTime: endTime,
+      type: type,
+      week,
+      week
+    }, 'Timetables')
+    if (created.day) {
+      return res.json({ success: true, message: 'Added timetable session.' })
+    } else {
+      console.error('Could not create session.')
+      return res.json({
+        success: false,
+        message: 'Failed to add session. Please try again.'
+      })
+    }
   } else {
     console.error('Not logged in.')
     return res.json({ success: false, message: 'Not logged in.' })
@@ -418,8 +430,9 @@ app.post('/deleteAllSessions', async (req, res) => {
       'Timetables'
     )
     return res.json({ success: true, message: `Deleted all sessions.` })
+  } else {
+    return res.json({ success: false, message: 'Not logged in.' })
   }
-  else {return res.json({ success: false, message: 'Not logged in.' }) }
 })
 
 app.post('/checkSessionAvailability', async (req, res) => {
@@ -432,7 +445,7 @@ app.post('/checkSessionAvailability', async (req, res) => {
     )
     const userTimetable = await findManyDocuments(
       client,
-      {username: req.session.username},
+      { username: req.session.username },
       'Timetables'
     )
     console.log(`Found user's timetable documents: ${userTimetable}`)
